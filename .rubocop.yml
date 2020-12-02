@@ -1,0 +1,9 @@
+AllCops:
+  Exclude:
+    - 'spec/spec_helper.rb'
+  # Brazil uses symlinks, so we should let Rubocop know
+  AllowSymlinksInCacheRootDirectory: true
+
+# Don't force magic comment `# frozen_string_literal: true` in every file
+Style/FrozenStringLiteralComment:
+  Enabled: false

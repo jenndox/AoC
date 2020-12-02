@@ -1,0 +1,43 @@
+package.Aoc-jennlin = {
+    interfaces = (1.0);
+
+    build-system = brazilrake;
+    build-environment = {
+        chroot = basic;
+        network-access = blocked;
+    };
+
+    build-tools = {
+        1.0 = {
+            # DO NOT add a build-tool dependency on any Ruby runtime!
+            # See the BrazilRake-2.0 documentation.
+            BrazilRake = 2.0;
+        };
+    };
+
+    dependencies = {
+        1.0 = {
+            # DO NOT add a dependency on any Ruby runtime!
+        };
+    };
+
+    runtime-dependencies = {
+        1.0 = {
+            Ruby = default;
+        };
+    };
+
+    test-dependencies = {
+        1.0 = {
+            # DO NOT add a test dependency on any Ruby runtime!
+            RubyGem-rspec     = 3.8.x;
+            RubyGem-rubocop   = 0.74.x;
+            RubyGem-simplecov = 0.17.x;
+        };
+    };
+
+    targets = {
+        # See Rakefile for build logic
+        ruby = { type = ruby; };
+    };
+};
