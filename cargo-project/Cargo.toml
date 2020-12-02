@@ -1,0 +1,18 @@
+[package]
+name = "aoc-jennlin"
+version = "0.1.0"
+authors = [""]
+edition = "2018"
+ 
+# Setting package to false to prevent accidental publishing of
+# code to crates.io, as described here:
+#
+# https://doc.rust-lang.org/cargo/reference/manifest.html#the-publish--field-optional
+#
+# Overriding this is considered an advanced action, and as such isn't parameterized
+# in octane.  Those who knowingly wish to publish their code will have to manually
+# remove this line and have it reviewed by your team, AppSec, the Open Source group,
+# etc.
+publish = false
+ 
+[dependencies]
