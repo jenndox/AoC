@@ -1,8 +1,12 @@
-use std::{
-    fs::File,
-    io::{prelude::*, BufReader},
-    env,
-};
+mod helper;
+mod day1;
+mod day2;
+
+pub use crate::day1::report;
+pub use crate::day2::password;
+pub use crate::helper::helper_fns;
+
+use std::env;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -14,93 +18,11 @@ fn main() {
     println!("Input file {}", filename);
 
     match day.parse().unwrap_or(1) {
-        1 => report(filename),
-        201 => passwords_first(filename),
-        2 => passwords(filename),
+        1 => report::report(filename),
+        201 => password::passwords_first(filename),
+        2 => password::passwords(filename),
         // Handle the rest of cases
         _ => println!("Not an Advent Day we have done yet."),
     }
-
 }
 
-fn report(filename: &String) {
-    let data: Vec<i64> = file_into_int_vec(filename);
-
-    for x in &data {
-        for y in &data {
-            for z in &data {
-                if (*x + *y + *z) == 2020 {
-                    println!("Found the TARGET! {} {} {}", x, y, z);
-                    println!("Answer is {}", x * y * z);
-                    return;
-                }
-            }
-        }
-    }
-
-}
-
-fn passwords_first(filename: &String) {
-    let mut success = 0;
-    let data: Vec<_> = file_into_vec(filename);
-
-    for x in &data {
-        let result: Vec<_> = x.split(' ').collect();
-        let counts: Vec<_> = result[0].split('-').collect();
-        let letterStr: Vec<_> = result[1].split(':').collect();
-        let letter = letterStr[0];
-        let password = result[2];
-        let lower = counts[0].parse().unwrap_or(0);
-        let upper = counts[1].parse().unwrap_or(0);
-
-        let countForLetter: Vec<_> = password.matches(letter).collect();
-        if countForLetter.len() >= lower && countForLetter.len() <= upper {
-            success += 1; 
-            println!("Successful password: {}", x);
-        }
-    }
-
-    println!("Successful passwords: {}", success);
-}
-
-fn passwords(filename: &String) {
-    let mut success = 0;
-
-    let data: Vec<_> = file_into_vec(filename);
-    for x in &data {
-        let result: Vec<_> = x.split(' ').collect();
-        let counts: Vec<_> = result[0].split('-').collect();
-        let letterStr: Vec<_> = result[1].split(':').collect();
-        let letter: char = letterStr[0].chars().nth(0).unwrap_or(' ');
-        let password = result[2];
-        let lower = counts[0].parse().unwrap_or(0);
-        let upper = counts[1].parse().unwrap_or(0);
-
-        let passwordChars: Vec<_> = password.chars().collect();
-        if (passwordChars[lower - 1] == letter || passwordChars[upper - 1] == letter) &&
-            !(passwordChars[lower - 1] == letter && passwordChars[upper - 1] == letter) {
-            success += 1; 
-            println!("Successful password: {}", x);
-        }
-    }
-
-    println!("Successful passwords: {}", success);
-}
-
-fn file_into_vec(filename: &String) -> Vec<String> {
-    let contents = File::open(filename)
-        .expect("Something went wrong reading the file");
-    let buf = BufReader::new(contents);
-    buf.lines()
-        .map(|l| l.expect("Could not parse line"))
-        .collect()
-}
-
-fn file_into_int_vec(filename: &String) -> Vec<i64> {
-    let contents = File::open(filename)
-        .expect("Something went wrong reading the file");
-    let buf = BufReader::new(contents);
-    buf.lines()
-        .map(|l| l.expect("Could not parse line").parse().unwrap_or(0))
-        .collect()
-}
