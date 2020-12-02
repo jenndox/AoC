@@ -15,6 +15,7 @@ fn main() {
 
     match day.parse().unwrap_or(1) {
         1 => report(filename),
+        201 => passwords_first(filename),
         2 => passwords(filename),
         // Handle the rest of cases
         _ => println!("Not an Advent Day we have done yet."),
@@ -23,13 +24,7 @@ fn main() {
 }
 
 fn report(filename: &String) {
-
-    let contents = File::open(filename)
-        .expect("Something went wrong reading the file");
-    let buf = BufReader::new(contents);
-    let data: Vec<_> = buf.lines()
-        .map(|l| l.expect("Could not parse line").parse().unwrap_or(0))
-        .collect();
+    let data: Vec<i64> = file_into_int_vec(filename);
 
     for x in &data {
         for y in &data {
@@ -45,15 +40,10 @@ fn report(filename: &String) {
 
 }
 
-fn passwordsFirst(filename: &String) {
+fn passwords_first(filename: &String) {
     let mut success = 0;
+    let data: Vec<_> = file_into_vec(filename);
 
-    let contents = File::open(filename)
-        .expect("Something went wrong reading the file");
-    let buf = BufReader::new(contents);
-    let data: Vec<_> = buf.lines()
-        .map(|l| l.expect("Could not parse line"))
-        .collect();
     for x in &data {
         let result: Vec<_> = x.split(' ').collect();
         let counts: Vec<_> = result[0].split('-').collect();
@@ -76,12 +66,7 @@ fn passwordsFirst(filename: &String) {
 fn passwords(filename: &String) {
     let mut success = 0;
 
-    let contents = File::open(filename)
-        .expect("Something went wrong reading the file");
-    let buf = BufReader::new(contents);
-    let data: Vec<_> = buf.lines()
-        .map(|l| l.expect("Could not parse line"))
-        .collect();
+    let data: Vec<_> = file_into_vec(filename);
     for x in &data {
         let result: Vec<_> = x.split(' ').collect();
         let counts: Vec<_> = result[0].split('-').collect();
@@ -100,4 +85,22 @@ fn passwords(filename: &String) {
     }
 
     println!("Successful passwords: {}", success);
+}
+
+fn file_into_vec(filename: &String) -> Vec<String> {
+    let contents = File::open(filename)
+        .expect("Something went wrong reading the file");
+    let buf = BufReader::new(contents);
+    buf.lines()
+        .map(|l| l.expect("Could not parse line"))
+        .collect()
+}
+
+fn file_into_int_vec(filename: &String) -> Vec<i64> {
+    let contents = File::open(filename)
+        .expect("Something went wrong reading the file");
+    let buf = BufReader::new(contents);
+    buf.lines()
+        .map(|l| l.expect("Could not parse line").parse().unwrap_or(0))
+        .collect()
 }
