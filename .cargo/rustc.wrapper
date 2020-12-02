@@ -1,0 +1,11 @@
+#!/bin/sh -eu
+
+# custom rustc wrapper for system-rust users
+# look for an optional custom rust wrapper
+# projects can override this by checking their main project
+
+MY_DIR=`dirname $0`
+. ${MY_DIR}/rustc_wrapper_env
+
+CUSTOM_WRAPPER="${BRAZILRUST_CARGO_PROJECT_DIR}/custom-system-rustc-wrapper"
+[ -e "$CUSTOM_WRAPPER" ] && exec $CUSTOM_WRAPPER "$@" || exec rustc "$@"
