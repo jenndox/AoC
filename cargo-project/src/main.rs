@@ -1,8 +1,8 @@
 mod helper;
-mod day1;
+mod day1alt;
 mod day2;
 
-pub use crate::day1::report;
+pub use crate::day1alt::report;
 pub use crate::day2::password;
 pub use crate::helper::helper_fns;
 
@@ -18,7 +18,7 @@ fn main() {
     println!("Input file {}", filename);
 
     match day.parse().unwrap_or(1) {
-        1 => report::report(filename),
+        1 => report::report(filename, 3),
         201 => password::passwords_first(filename),
         2 => password::passwords(filename),
         // Handle the rest of cases
