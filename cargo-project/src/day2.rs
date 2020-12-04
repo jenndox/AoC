@@ -16,7 +16,7 @@ pub mod password {
 
             let count: Vec<_> = password.matches(letter).collect();
             if count.len() >= lower && count.len() <= upper {
-                success += 1;
+                success += 1; 
                 println!("Successful password: {}", x);
             }
         }
@@ -40,7 +40,7 @@ pub mod password {
             let passwordchars: Vec<_> = password.chars().collect();
             if (passwordchars[lower - 1] == letter || passwordchars[upper - 1] == letter) &&
                 !(passwordchars[lower - 1] == letter && passwordchars[upper - 1] == letter) {
-                success += 1;
+                success += 1; 
                 println!("Successful password: {}", x);
             }
         }
@@ -48,3 +48,4 @@ pub mod password {
         println!("Successful passwords: {}", success);
     }
 }
+

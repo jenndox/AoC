@@ -1,0 +1,39 @@
+# -*-perl-*-
+
+package.aoc-jennlin = {
+interfaces = (1.0);
+    build-system = brazilrust;
+    build-environment = {
+        chroot = basic;
+        network-access = blocked;
+    };
+
+    build-tools = {
+        1.0 = {
+            BrazilRust = 2.0;
+            RustLang1x = 1.x;
+        };
+    };
+
+    dependencies = {
+        1.0 = {
+        };
+    };
+
+    runtime-dependencies = {
+        1.0 = {
+        };
+    };
+
+    test-dependencies = {
+        1.0 = {
+        };
+    };
+
+    targets = {
+        rust = {
+            type = rust;
+        };
+    };
+};
+
