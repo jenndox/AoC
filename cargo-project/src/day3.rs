@@ -9,7 +9,7 @@ pub mod sled {
         let mut y = 0;
         while y < 323 {
             println!("{} th step: {}", y, data[y][x]);
-            let mut tree = data[y][x];
+            let tree = data[y][x];
             if tree == '#'
             {
                 treecut += 1;
@@ -17,7 +17,7 @@ pub mod sled {
 
             y += 2;
             x += 1;
-            if (x >= 31) {
+            if x >= 31 {
                 x = x % 31;
             }
         }
