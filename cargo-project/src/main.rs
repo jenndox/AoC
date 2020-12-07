@@ -4,12 +4,14 @@ mod day2;
 mod day3;
 mod day4alt;
 mod day5;
+mod day6;
 
 pub use crate::day1alt::report;
 pub use crate::day2::password;
 pub use crate::day3::sled;
 pub use crate::day4alt::passport;
 pub use crate::day5::seats;
+pub use crate::day6::customs;
 pub use crate::helper::helper_fns;
 
 use std::env;
@@ -30,6 +32,7 @@ fn main() {
         3 => sled::toboggan(filename),
         4 => passport::passports(filename),
         5 => seats::seat_sort(filename),
+        6 => customs::question(filename),
         // Handle the rest of cases
         _ => println!("Not an Advent Day we have done yet."),
     }
