@@ -48,4 +48,13 @@ pub mod helper_fns {
         }
         results
     }
+
+    pub fn file_into_matrix(filename: &String) -> Vec<Vec<char>> {
+        let contents = File::open(filename)
+            .expect("Something went wrong reading the file");
+        let buf = BufReader::new(contents);
+        buf.lines()
+            .map(|l| l.expect("Could not parse line").chars().collect())
+            .collect()
+    }
 }
