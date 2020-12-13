@@ -10,6 +10,7 @@ mod day8;
 mod day9;
 mod day10;
 mod day11;
+mod day12;
 
 pub use crate::day1alt::report;
 pub use crate::day2::password;
@@ -22,6 +23,7 @@ pub use crate::day8::device;
 pub use crate::day9::xmas;
 pub use crate::day10::jolt;
 pub use crate::day11::lobby;
+pub use crate::day12::ferry;
 pub use crate::helper::helper_fns;
 
 use std::env;
@@ -48,6 +50,7 @@ fn main() {
         9 => xmas::cypher(filename),
         10 => jolt::convert(filename),
         11 => lobby::arrange(filename),
+        12 => ferry::steer(filename),
         // Handle the rest of cases
         _ => println!("Not an Advent Day we have done yet."),
     }
