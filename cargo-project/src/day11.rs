@@ -9,7 +9,7 @@ pub mod lobby {
         let mut x = 0;
         let mut y = 0;
 
-        while changes && tries < 3 {
+        while changes && tries < 30000 {
             changes = false;
 
             for row in &data {
@@ -35,15 +35,13 @@ pub mod lobby {
                         '.' => { new_row.push('.'); },
                         _ => {println!("Found other");},
                     }
-                    y += 1;
+                    x += 1;
                 }
-                println!("{}", row);
                 new_data.push(new_row);   
-                x += 1;
-                y = 0;
+                y += 1;
+                x = 0;
             }
             println!("Tries: {} Made changes: {}", tries, changes);
-            println!("------------------------------------");
             data = new_data.clone();
             new_data.clear();
             x = 0;
@@ -58,6 +56,46 @@ pub mod lobby {
 
     fn count_full_prox(x: i32, y: i32, data:&Vec<String>) -> i32 {
         let mut full_seats = 0;
+
+        if check_direction(0, 1, x, y, data) { full_seats += 1; }
+        if check_direction(0, -1, x, y, data) { full_seats += 1; }
+        if check_direction(1, 0, x, y, data) { full_seats += 1; }
+        if check_direction(-1, 0, x, y, data) { full_seats += 1; }
+        if check_direction(1, 1, x, y, data) { full_seats += 1; }
+        if check_direction(-1, 1, x, y, data) { full_seats += 1; }
+        if check_direction(1, -1, x, y, data) { full_seats += 1; }
+        if check_direction(-1, -1, x, y, data) { full_seats += 1; }
+
+        full_seats
+    }
+
+    fn check_direction(delta_x: i32, delta_y: i32, x: i32, y: i32, data:&Vec<String>) -> bool {
+        let mut i = x + delta_x; // Don't check the current char.
+        let mut j = y + delta_y;
+        let mut found_seat = false;
+        let mut seat_full = false;
+        let curr_row = &data[0];
+
+        while !found_seat && i >= 0 && j >= 0 
+                && j < data.len() as i32 && i < curr_row.len() as i32 {
+           let row =  &data[j as usize];
+           let row_chars: Vec<char> = row.chars().collect();
+           let seat = row_chars[i as usize];
+           if seat == '#' {
+               found_seat = true;
+               seat_full = true;
+           } else if seat == 'L' {
+               found_seat = true;
+           }
+
+           i += delta_x; // Get the next point
+           j += delta_y; 
+        }
+        seat_full
+    }
+
+    fn _count_full_prox_old(x: i32, y: i32, data:&Vec<String>) -> i32 {
+        let mut full_seats = 0;
         let mut i = x - 1;
         let mut j = y - 1;
 
@@ -69,7 +107,6 @@ pub mod lobby {
                     if i >= 0 && i < row.len() as i32 { 
                         let row_chars: Vec<char> = row.chars().collect();
                         let seat = row_chars[i as usize];
-println!("Seat {} for i {} j {}", seat, i, j);
                         if seat == '#' {
                             full_seats += 1;
                         }
@@ -80,8 +117,6 @@ println!("Seat {} for i {} j {}", seat, i, j);
             j += 1;
             i = x - 1;
         }
-println!("Count {} for x {} y {}", full_seats, x, y);
-if full_seats > 9 { println!("WTF found too many"); }
         full_seats
     }
 
